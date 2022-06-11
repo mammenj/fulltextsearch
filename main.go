@@ -25,30 +25,29 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("Loaded %d documents in %v", len(docs), time.Since(start))
-	type index map[string][]int
+	log.Printf("1> Loaded %d documents in %v", len(docs), time.Since(start))
+
 	start = time.Now()
-	idx := indexer.NewIndex()
-	idx.Add(docs)
-	log.Printf("Indexed %d documents in %v", len(docs), time.Since(start))
+	idDoc := indexer.NewIndex(docs)
+	//idDoc.Index(docs)
+	log.Printf("2> Indexed %d documents in %v", len(docs), time.Since(start))
 
 	// get search query
 	scanner := bufio.NewScanner(os.Stdin)
-
 	for {
-		fmt.Print("Enter search query:: ")
+		fmt.Print(">> Enter search query:: ")
 		scanner.Scan()
 		search_query = scanner.Text()
 		if len(search_query) != 0 {
 			start = time.Now()
-			matchedIDs := idx.Search(search_query)
-			log.Printf("Found %d documents in %v", len(matchedIDs), time.Since(start))
+			matchedIDs := idDoc.Search(search_query)
+			log.Printf("3> Found %d documents in %v", len(matchedIDs), time.Since(start))
 
 			for _, id := range matchedIDs {
 				doc := docs[id]
-				log.Printf("%d\t%s\n", id, doc.Text)
+				log.Printf("docID:: %d\t Text::%s\n", id, doc.Text)
 			}
-
+			log.Printf("------------------------*****************************************************-------------------------------------")
 		}
 	}
 

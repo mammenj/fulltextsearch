@@ -7,15 +7,28 @@ import (
 	"github.com/mammenj/fulltextsearch/loader"
 )
 
-// index is an inverted index. It maps tokens to document IDs.
+// inverted index. It maps tokens to IDs.
 type Index map[string][]int
 
-func NewIndex() Index {
-	return make(Index)
+// creating an empty index
+func NewIndex(docs []loader.Document) Index {
+	//return make(Index)
+	idx := make(Index)
+	for _, doc := range docs {
+		for _, token := range analyze(doc.Text) {
+			ids := idx[token]
+			if ids != nil && ids[len(ids)-1] == doc.ID {
+				// Don't add same ID twice.
+				continue
+			}
+			idx[token] = append(ids, doc.ID)
+		}
+	}
+	return idx
 }
 
 // add adds documents to the index.
-func (idx Index) Add(docs []loader.Document) {
+func (idx Index) Index(docs []loader.Document) {
 	for _, doc := range docs {
 		for _, token := range analyze(doc.Text) {
 			ids := idx[token]
