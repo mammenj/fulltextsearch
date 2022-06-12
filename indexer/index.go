@@ -13,7 +13,7 @@ type Index map[string][]int
 // creating an empty index
 func NewIndex(docs []loader.Document) Index {
 	//return make(Index)
-	idx := make(Index)
+	idx := make(Index, len(docs))
 	for _, doc := range docs {
 		for _, token := range analyze(doc.Text) {
 			ids := idx[token]
