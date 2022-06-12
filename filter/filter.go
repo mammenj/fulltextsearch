@@ -1,4 +1,4 @@
-package indexer
+package filter
 
 import (
 	"strings"
@@ -6,7 +6,7 @@ import (
 	snowballeng "github.com/kljensen/snowball/english"
 )
 
-func lowercaseFilter(tokens []string) []string {
+func LowercaseFilter(tokens []string) []string {
 	r := make([]string, len(tokens))
 	for i, token := range tokens {
 		r[i] = strings.ToLower(token)
@@ -14,7 +14,7 @@ func lowercaseFilter(tokens []string) []string {
 	return r
 }
 
-func stopwordFilter(tokens []string) []string {
+func StopwordFilter(tokens []string) []string {
 	var stopwords = map[string]struct{}{
 		"a": {}, "and": {}, "be": {}, "have": {}, "i": {},
 		"in": {}, "of": {}, "that": {}, "the": {}, "to": {},
@@ -28,7 +28,7 @@ func stopwordFilter(tokens []string) []string {
 	return r
 }
 
-func stemmerFilter(tokens []string) []string {
+func StemmerFilter(tokens []string) []string {
 	r := make([]string, len(tokens))
 	for i, token := range tokens {
 		r[i] = snowballeng.Stem(token, false)

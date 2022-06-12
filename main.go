@@ -15,7 +15,6 @@ import (
 func main() {
 	var datapath, search_query string
 	flag.StringVar(&datapath, "p", "enwiki-latest-abstract1.xml.gz", "wiki abstract dump path")
-	//flag.StringVar(&query, "q", "Small wild cat", "search query")
 	flag.Parse()
 
 	log.Println("Starting full text search in memory...")
@@ -29,8 +28,7 @@ func main() {
 
 	start = time.Now()
 	idDoc := indexer.NewIndex(docs)
-	//idDoc.Index(docs)
-	log.Printf("2> Indexed %d documents in %v", len(docs), time.Since(start))
+	log.Printf("2> Indexed %d documents and %d tokens in %v", len(docs), len(idDoc), time.Since(start))
 
 	// get search query
 	scanner := bufio.NewScanner(os.Stdin)

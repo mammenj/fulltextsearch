@@ -4,6 +4,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/mammenj/fulltextsearch/filter"
 	"github.com/mammenj/fulltextsearch/loader"
 )
 
@@ -91,8 +92,8 @@ func tokenize(text string) []string {
 
 func analyze(text string) []string {
 	tokens := tokenize(text)
-	tokens = lowercaseFilter(tokens)
-	tokens = stopwordFilter(tokens)
-	tokens = stemmerFilter(tokens)
+	tokens = filter.LowercaseFilter(tokens)
+	tokens = filter.StopwordFilter(tokens)
+	tokens = filter.StemmerFilter(tokens)
 	return tokens
 }
